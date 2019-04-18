@@ -34,8 +34,23 @@ namespace XamarinEssentialsFeatures
             Button openBrowserButton = FindViewById<Button>(Resource.Id.button_Google);
             openBrowserButton.Click += OpenBrowser_Click;
 
+            // send email
             Button sendEmailButton = FindViewById<Button>(Resource.Id.button_Email);
             sendEmailButton.Click += SendEmailButton_Click;
+
+            // open map
+            Button openMapButton = FindViewById<Button>(Resource.Id.button_Map);
+            openMapButton.Click += OpenMapButton_Click;
+        }
+
+        private void AppSettingsButton_Click(object sender, System.EventArgs e)
+        {
+            AppInfo.ShowSettingsUI();
+        }
+
+        private async void OpenBrowser_Click(object sender, System.EventArgs e)
+        {
+            await Browser.OpenAsync("https://www.google.com");
         }
 
         private async void SendEmailButton_Click(object sender, EventArgs e)
@@ -44,14 +59,12 @@ namespace XamarinEssentialsFeatures
             await Email.ComposeAsync(message);
         }
 
-        private void AppSettingsButton_Click(object sender, System.EventArgs e)
+        private async void OpenMapButton_Click(object sender, EventArgs e)
         {
-            AppInfo.ShowSettingsUI();
-        }
+            var location = new Location(47.645160, -122.1306032);
+            var options = new MapLaunchOptions { Name = "Microsoft Building 25" };
 
-        private void OpenBrowser_Click(object sender, System.EventArgs e)
-        {
-            Browser.OpenAsync("https://www.google.com");
+            await Map.OpenAsync(location, options);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
