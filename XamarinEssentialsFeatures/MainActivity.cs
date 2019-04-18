@@ -31,32 +31,17 @@ namespace XamarinEssentialsFeatures
             appSettingsButton.Click += AppSettingsButton_Click;
 
             // open browser
-            Button openBrowser = FindViewById<Button>(Resource.Id.button_Google);
-            openBrowser.Click += OpenBrowser_Click;
+            Button openBrowserButton = FindViewById<Button>(Resource.Id.button_Google);
+            openBrowserButton.Click += OpenBrowser_Click;
 
-            public async Task SendEmail(string subject, string body, List<string> recipients)
-            {
-                try
-                {
-                    var message = new EmailMessage
-                    {
-                        Subject = subject,
-                        Body = body,
-                        To = recipients,
-                        //Cc = ccRecipients,
-                        //Bcc = bccRecipients
-                    };
-                    await Email.ComposeAsync(message);
-                }
-                catch (FeatureNotSupportedException fbsEx)
-                {
-                    // Email is not supported on this device
-                }
-                catch (Exception ex)
-                {
-                    // Some other exception occurred
-                }
-            }
+            Button sendEmailButton = FindViewById<Button>(Resource.Id.button_Email);
+            sendEmailButton.Click += SendEmailButton_Click;
+        }
+
+        private async void SendEmailButton_Click(object sender, EventArgs e)
+        {
+            var message = new EmailMessage();
+            await Email.ComposeAsync(message);
         }
 
         private void AppSettingsButton_Click(object sender, System.EventArgs e)
